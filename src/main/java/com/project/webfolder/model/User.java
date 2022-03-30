@@ -6,10 +6,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table
 @Data
+@Table(name="Users")
 public class User {
 
     @Id
@@ -17,6 +19,11 @@ public class User {
     private Long id;
     private String username;
     private String password;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Comment> comments;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<File> files;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate joiningDate;
@@ -29,6 +36,7 @@ public class User {
     public User(String username, String password){
         this.username = username;
         this.password = password;
+        this.comments = new ArrayList<>();
         active = true;
     }
 
