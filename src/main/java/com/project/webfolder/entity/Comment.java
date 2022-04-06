@@ -1,4 +1,4 @@
-package com.project.webfolder.model;
+package com.project.webfolder.entity;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,6 +13,7 @@ public class Comment {
     private long id;
     @ManyToOne
     @MapsId
+    @JoinColumn(name = "")
     private User user;
     private String text;
     @DateTimeFormat(pattern = "dd-MM-yyyy")

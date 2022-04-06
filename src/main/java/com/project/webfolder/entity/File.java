@@ -1,4 +1,4 @@
-package com.project.webfolder.model;
+package com.project.webfolder.entity;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
