@@ -15,14 +15,5 @@ public class File {
     private Long userId;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
-    //поле файла
-
-    //конструктор файла
-//    public File(File file){
-//
-//    }
-
-    public File(){
-
-    }
+    private String path;
 }
