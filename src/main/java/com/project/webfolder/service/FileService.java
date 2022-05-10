@@ -67,11 +67,19 @@ public class FileService {
     }
 
     public String uploadFileInCloud(MultipartFile uploadingFile) throws IOException {
+        com.project.webfolder.entity.File repoFile = new com.project.webfolder.entity.File();
+        repoFile.setDate(LocalDate.now());
+        repoFile.setUserId(getCurrentUserId());
+        repoFile = fileRepository.save(repoFile);
+        String filePath = String.format("%s/%s", repoFile.getId(), uploadingFile.getOriginalFilename());
+        repoFile.setPath(filePath);
+
         AmazonS3 s3 = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration("storage.yandexcloud.net", "ru-central1"))
                 .build();
 
-        s3.putObject("web-folder", String.format("%s/%s", getCurrentUserId(), uploadingFile.getOriginalFilename()), FileService.convert(uploadingFile));
+        s3.putObject("web-folder", String.format("%s/%s", repoFile.getId(), uploadingFile.getOriginalFilename()), FileService.convert(uploadingFile));
+        fileRepository.save(repoFile);
         return "redirect:/upload";
     }
 
@@ -95,7 +103,7 @@ public class FileService {
             System.err.println(e.getErrorMessage());
             System.exit(1);
         }
-        return file;
+        return file.listFiles()[0];
     }
 
     private long getCurrentUserId() {
