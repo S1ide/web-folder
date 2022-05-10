@@ -27,8 +27,8 @@ public class User implements UserDetails {
     @Transient
     private Set<Role> roles;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<File> files;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    private Set<File> files;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate joiningDate;
@@ -40,8 +40,8 @@ public class User implements UserDetails {
     public void setNewUser(){
         this.joiningDate = LocalDate.now();
         this.active = true;
-        this.files = new HashSet<>();
-        this.comments = new HashSet<>();
+//        this.files = new HashSet<>();
+//        this.comments = new HashSet<>();
     }
 
 

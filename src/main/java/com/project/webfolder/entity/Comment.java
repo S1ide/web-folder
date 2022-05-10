@@ -10,10 +10,9 @@ import java.time.LocalDate;
 @Data
 public class Comment {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @ManyToOne
-    @MapsId
-    @JoinColumn(name = "")
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
     private String text;
     @DateTimeFormat(pattern = "dd-MM-yyyy")

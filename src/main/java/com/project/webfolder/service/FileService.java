@@ -106,7 +106,7 @@ public class FileService {
         return file.listFiles()[0];
     }
 
-    private long getCurrentUserId() {
+    protected long getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
 
@@ -115,7 +115,7 @@ public class FileService {
         return user.getId();
     }
 
-    public static File convert(MultipartFile file) throws IOException {
+    private static File convert(MultipartFile file) throws IOException {
         File convFile = new File(file.getOriginalFilename());
         convFile.createNewFile();
         FileOutputStream fos = new FileOutputStream(convFile);

@@ -7,6 +7,7 @@ import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.project.webfolder.WebFolderApplication;
+import com.project.webfolder.service.CommentService;
 import com.project.webfolder.service.FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,9 +35,11 @@ import java.io.IOException;
 public class SaveFileController {
 
     private final FileService fileService;
+    private final CommentService commentService;
 
     @GetMapping("/upload")
-    public String upload() {
+    public String upload(Model model) {
+        model.addAttribute("comments", commentService.getComments());
         return "fileUpload";
     }
 
@@ -50,7 +54,8 @@ public class SaveFileController {
     }
 
     @GetMapping("/download")
-    public String download() {
+    public String download(Model model) {
+        model.addAttribute("comments", commentService.getComments());
         return "fileDownload";
     }
 

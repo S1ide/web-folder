@@ -11,8 +11,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +34,8 @@ public class UserService implements UserDetailsService {
 
         return user;
     }
+
+
 
     public User findUserById(Long userId){
         Optional<User> userFromBd = userRepository.findById(userId);
