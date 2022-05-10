@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" content="text/html" http-equiv="Content-Type">
     <title>Upload</title>
 </head>
 <body>
-    <form enctype="multipart/form-data" action="/upload">
-        <input type="file" name="file">
-        <input type="submit" formmethod="post">
-    </form>
+<form enctype="multipart/form-data" action="/upload">
+    <input type="file" name="file">
+    <input type="submit" formmethod="post">
+</form>
+<form enctype="multipart/form-data" method="post" action="/upload_cloud">
+    <input type="file" name="file">
+    <input type="submit" name="submit" value="Загрузить">
+</form>
 </body>
 </html>

@@ -1,8 +1,18 @@
 package com.project.webfolder.controller;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.client.builder.AwsClientBuilder;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.project.webfolder.WebFolderApplication;
 import com.project.webfolder.service.FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,6 +31,7 @@ import java.io.IOException;
 @Slf4j
 @RequiredArgsConstructor
 public class SaveFileController {
+
     private final FileService fileService;
 
     @GetMapping("/upload")
@@ -30,9 +41,12 @@ public class SaveFileController {
 
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("file") MultipartFile uploadingFile) throws IOException {
-        fileService.uploadFile(uploadingFile);
+        return fileService.uploadFile(uploadingFile);
+    }
 
-        return "redirect:/upload";
+    @PostMapping("/upload_cloud")
+    public String uploadFileInCloud(@RequestParam("file") MultipartFile uploadingFile) throws IOException {
+        return fileService.uploadFileInCloud(uploadingFile);
     }
 
     @GetMapping("/download")
@@ -51,4 +65,15 @@ public class SaveFileController {
 
         return new ResponseEntity<>(new FileSystemResource(file), respHeaders, HttpStatus.OK);
     }
+
+    @PostMapping("/download_cloud")
+    public ResponseEntity<FileSystemResource> downloadFileFromCloud(@RequestParam("id") Long id){
+        File file = fileService.getFileByIdFromCloud(id);
+        HttpHeaders respHeaders = new HttpHeaders();
+        respHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        respHeaders.setContentLength(file.length());
+
+        return new ResponseEntity<>(new FileSystemResource(file), respHeaders, HttpStatus.OK);
+    }
+
 }

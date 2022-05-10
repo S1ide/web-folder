@@ -37,13 +37,11 @@ public class User implements UserDetails {
     private LocalDate leavingDate;
     private boolean active;
 
-
-    public User(String username, String password){
-        this.username = username;
-        this.password = password;
-        this.comments = new HashSet<>();
+    public void setNewUser(){
         this.joiningDate = LocalDate.now();
-        active = true;
+        this.active = true;
+        this.files = new HashSet<>();
+        this.comments = new HashSet<>();
     }
 
 
